@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hospital Voice Agent - Admin Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="app-layout">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="logo-icon">MV</div>
+                <div class="brand-text">
+                    <h2>Medicare Voice</h2>
+                    <span class="badge-live"><span class="pulse"></span> AI Active</span>
+                </div>
+            </div>
+
+            <nav class="nav-menu">
+                <button class="nav-item active" data-tab="tab-overview">
+                    <span class="icon">01</span> Overview
+                </button>
+                <button class="nav-item" data-tab="tab-doctors">
+                    <span class="icon">02</span> Doctors
+                </button>
+                <button class="nav-item" data-tab="tab-appointments">
+                    <span class="icon">03</span> Appointments
+                </button>
+                <button class="nav-item" data-tab="tab-patients">
+                    <span class="icon">04</span> Patients
+                </button>
+                <button class="nav-item highlight" data-tab="tab-voice">
+                    <span class="icon">05</span> Voice Simulator
+                </button>
+            </nav>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Top Header Bar -->
+            <header class="top-header">
+                <div class="header-title">
+                    <h1 id="page-title">Dashboard Overview</h1>
+                    <p id="page-subtitle">Real-time hospital receptionist agent metrics and scheduling</p>
+                </div>
+                <div class="header-actions">
+                    <div class="theme-switch" role="group" aria-label="Theme color">
+                        <button type="button" class="theme-option active" data-theme-value="black" onclick="setTheme('black')">Black</button>
+                        <button type="button" class="theme-option" data-theme-value="white" onclick="setTheme('white')">White</button>
+                    </div>
+                    <span class="time-display" id="live-clock">--:--:--</span>
+                    <button id="refresh-btn" class="btn btn-primary" type="button">Refresh</button>
+                </div>
+            </header>
+
+            <!-- TAB 1: OVERVIEW -->
+            <section id="tab-overview" class="tab-content active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon icon-blue">A</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Total Appointments</span>
+                            <h3 class="stat-value" id="stat-total-apts">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-green">D</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Active Doctors</span>
+                            <h3 class="stat-value" id="stat-total-doctors">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-purple">P</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Registered Patients</span>
+                            <h3 class="stat-value" id="stat-total-patients">0</h3>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-icon icon-amber">V</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Voice Pipeline Status</span>
+                            <h3 class="stat-value text-green">Online</h3>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Bookings Table -->
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3>Recent Appointments</h3>
+                        <button class="btn btn-sm btn-outline" onclick="switchTab('tab-appointments')">View All</button>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Appt ID</th>
+                                    <th>Patient</th>
+                                    <th>Doctor</th>
+                                    <th>Date & Time</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="overview-recent-table">
+                                <tr><td colspan="5" class="text-center">Loading appointments...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 2: DOCTORS -->
+            <section id="tab-doctors" class="tab-content">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3>Registered Doctors</h3>
+                    </div>
+                    <div class="doctors-grid" id="doctors-grid">
+                        <!-- Loaded dynamically -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 3: APPOINTMENTS -->
+            <section id="tab-appointments" class="tab-content">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3>All Appointments</h3>
+                        <div class="filters">
+                            <select id="apt-status-filter" onchange="loadAppointments()">
+                                <option value="">All Statuses</option>
+                                <option value="confirmed">Confirmed</option>
+                                <option value="rescheduled">Rescheduled</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Appt ID</th>
+                                    <th>Patient ID</th>
+                                    <th>Doctor ID</th>
+                                    <th>Appointment Date</th>
+                                    <th>Status</th>
+                                    <th>Google Event ID</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="all-appointments-table">
+                                <tr><td colspan="7" class="text-center">Loading appointments...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 4: PATIENTS -->
+            <section id="tab-patients" class="tab-content">
+                <div class="card card-table">
+                    <div class="card-header">
+                        <h3>Registered Patients</h3>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Patient Code</th>
+                                    <th>Full Name</th>
+                                    <th>Phone Number</th>
+                                    <th>Email</th>
+                                    <th>Registered Date</th>
+                                </tr>
+                            </thead>
+                            <tbody id="patients-table">
+                                <tr><td colspan="5" class="text-center">Loading patients...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- TAB 5: VOICE AGENT SIMULATOR -->
+            <section id="tab-voice" class="tab-content">
+                <div class="voice-sim-grid">
+                    <div class="chat-container card">
+                        <div class="chat-header">
+                            <div class="agent-avatar">AI</div>
+                            <div class="agent-meta">
+                                <h4>Hospital Voice Receptionist</h4>
+                                <span>Ready to help with appointments</span>
+                            </div>
+                        </div>
+                        <div class="chat-messages" id="chat-messages">
+                            <div class="message msg-agent">
+                                <div class="msg-bubble">
+                                    Hello! I am your hospital voice receptionist. How can I help you book, reschedule, or cancel a doctor appointment today?
+                                </div>
+                            </div>
+                        </div>
+                        <div class="chat-input-bar">
+                            <button id="mic-btn" class="btn btn-mic" onclick="toggleMicListening()">Speak</button>
+                            <input type="text" id="voice-user-input" placeholder="Type text or click Mic to speak..." onkeypress="if(event.key==='Enter') sendVoiceMessage()">
+                            <button class="btn btn-primary" onclick="sendVoiceMessage()">Send</button>
+                        </div>
+                    </div>
+
+                    <!-- Simulator Inspector Panel -->
+                    <div class="inspector-container card">
+                        <h3>Voice Pipeline Debug Inspector</h3>
+                        <p class="text-subtle">Real-time STT / Agent / TTS execution flow</p>
+                        
+                        <div class="inspector-box">
+                            <label>Simulated Phone Number:</label>
+                            <input type="text" id="sim-phone" value="+919876543210" class="input-code">
+                        </div>
+
+                        <div class="inspector-steps">
+                            <div class="step-item">
+                                <span class="step-num">1</span>
+                                <div class="step-desc">
+                                    <strong>Whisper Speech-to-Text</strong>
+                                    <span id="stt-status" class="text-subtle">Awaiting mic input...</span>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <span class="step-num">2</span>
+                                <div class="step-desc">
+                                    <strong>LangGraph Intent & State Node</strong>
+                                    <span id="graph-status" class="text-subtle">Ready</span>
+                                </div>
+                            </div>
+                            <div class="step-item">
+                                <span class="step-num">3</span>
+                                <div class="step-desc">
+                                    <strong>Text-to-Speech</strong>
+                                    <span id="tts-status" class="text-subtle">Ready for audio output</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="inspector-box margin-top">
+                            <label>Raw Webhook Response Payload:</label>
+                            <pre id="raw-payload" class="code-block">{ "status": "idle" }</pre>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Scripts -->
+    <script src="app.js"></script>
+</body>
+</html>
+
+
+
+
+
+
+

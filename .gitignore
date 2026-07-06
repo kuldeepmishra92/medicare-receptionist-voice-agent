@@ -1,0 +1,97 @@
+# ─────────────────────────────────────────────────────────
+# .gitignore — Voice Appointment Agent
+# ─────────────────────────────────────────────────────────
+
+# ── Virtual Environments ──────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# ── Environment Variables & Secrets ───────────────────────
+.env
+*.env
+!.env.example
+secrets.json
+
+# ── Databases ─────────────────────────────────────────────
+*.db
+*.sqlite
+*.sqlite3
+voice_agent.db
+
+# ── Python Cache & Artifacts ──────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ── Testing & Coverage ────────────────────────────────────
+.pytest_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+
+# ── Temporary Scripts & Logs ──────────────────────────────
+tmp_*.py
+scratch/
+reference/
+uploads/
+temp/
+tmp/
+*.log
+logs/*
+!logs/.gitkeep
+
+# ── Google OAuth & API Credentials ────────────────────────
+credentials.json
+token.json
+token.pickle
+
+# ── IDEs & Editors ────────────────────────────────────────
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+*~
+.project
+.pydevproject
+.settings/
+
+# ── OS Generated Files ────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
