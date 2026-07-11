@@ -59,7 +59,7 @@ coverage.xml
 # ── Temporary Scripts & Logs ──────────────────────────────
 tmp_*.py
 scratch/
-reference/
+# reference/
 uploads/
 temp/
 tmp/

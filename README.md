@@ -19,7 +19,7 @@ An intelligent, multi-doctor hospital voice receptionist agent that handles appo
 
 | 🖥️ Admin Dashboard Overview | 🎙️ Interactive Voice Simulator |
 |---|---|
-| ![Admin Dashboard](https://raw.githubusercontent.com/kuldeepmishra92/medicare-receptionist-voice-agent/main/reference/dashboard_overview.png) | ![Voice Simulator](https://raw.githubusercontent.com/kuldeepmishra92/medicare-receptionist-voice-agent/main/reference/voice_simulator.png) |
+| ![Admin Dashboard](reference/dashboard_overview.png) | ![Voice Simulator](reference/voice_simulator.png) |
 
 ---
 
