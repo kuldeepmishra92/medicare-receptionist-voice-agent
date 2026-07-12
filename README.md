@@ -11,7 +11,7 @@ license: mit
 
 # 🏥 Multi-Doctor Voice Appointment Scheduling Agent
 
-An intelligent, multi-doctor hospital voice receptionist agent that handles appointment booking, rescheduling, cancellation, and general medical inquiries through natural voice conversations.
+An intelligent, multi-doctor hospital voice receptionist agent developed by **Kuldeep Kumar Mishra**. It handles appointment booking, rescheduling, cancellation, and general medical inquiries through natural voice conversations.
 
 ---
 
@@ -213,6 +213,12 @@ pytest tests/ -v
 
 ---
 
+## 👤 Developer
+
+* **Kuldeep Kumar Mishra** - [GitHub](https://github.com/kuldeepmishra92)
+
+---
+
 ## 📜 License
 
-MIT License. Developed for intelligent automated medical receptionist and voice appointment scheduling systems.
+MIT License. Developed by **Kuldeep Kumar Mishra** for intelligent automated medical receptionist and voice appointment scheduling systems.
